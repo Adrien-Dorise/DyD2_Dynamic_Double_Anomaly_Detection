@@ -1,6 +1,9 @@
 #include "math_HCE.h"
 
 
+#include <stdio.h>
+
+
 
 float absolute(float value)
 {
@@ -22,10 +25,10 @@ float power(float data, int exponent)
 	}
 	else if (exponent == 0)
 	{
-		printf("\n\nreturn 1 %i\n\n",exponent);
+		printf("\n\nreturn 1 %i\n\n", exponent);
 		return 1.0;
 	}
-	else 
+	else
 	{
 		for (int i = 0; i < exponent; i++)
 		{
@@ -33,7 +36,7 @@ float power(float data, int exponent)
 		}
 	}
 	return result;
-	
+
 }
 
 float sqroot(float data)
@@ -63,12 +66,12 @@ float manhattan(float x1, float x2)
 	float distance;
 
 	distance = x2 - x1;
-	return absolute(distance);	
+	return absolute(distance);
 }
 
 float density(int dataNumber, int featureNumber, float size[])
 {
-	float volume=1;
+	float volume = 1;
 	float density;
 	for (int i = 0; i < featureNumber; i++)
 	{
@@ -93,7 +96,7 @@ float mean(float data[], int size)
 	{
 		result += data[i];
 	}
-	
+
 	result = result / size;
 	return result;
 }
@@ -106,7 +109,7 @@ float variance(float data[], int size)
 	dataMean = mean(data, size);
 	for (int i = 0; i < size; i++)
 	{
-		result += power((data[i]-dataMean),2);
+		result += power((data[i] - dataMean), 2);
 	}
 	result = result / (size - 1.0);
 	return result;
@@ -120,11 +123,11 @@ float strdDev(float data[], int size)
 float skewness(float data[], int size)
 {
 	float result, dataMean, dataVariance, firstHalf, sumResult, secondHalf;
-	
+
 	sumResult = 0;
 	dataMean = mean(data, size);
 	dataVariance = variance(data, size);
-	firstHalf = (power(size, 2)) / ((size - 1.0)*(size - 2.0));
+	firstHalf = (power(size, 2)) / ((size - 1.0) * (size - 2.0));
 	for (int i = 0; i < size; i++)
 	{
 		sumResult += power(data[i] - dataMean, 3);
@@ -150,13 +153,13 @@ float kurtosis(float data[],int size)
 	}
 	denominator = power(denominator, 2);
 	result = (size * numerator) / denominator;
-	return result; 
+	return result;
 }
 */
 
 float kurtosis(float data[], int size)
 {
-	float result, dataMean, deviation, firstHalf, sum=0, secondHalf;
+	float result, dataMean, deviation, firstHalf, sum = 0, secondHalf;
 
 	dataMean = mean(data, size);
 	deviation = strdDev(data, size);
@@ -174,6 +177,43 @@ float kurtosis(float data[], int size)
 	return result;
 }
 
+
+float median(float data[], const int size)
+{
+	float temp[MAXSIZEMEDIAN] = { 0 };
+	float result = 0;
+	for (int i = 0; i < size; i++)
+	{
+		temp[i] = data[i];
+	}
+	sortArray(temp, size);
+	if (isEven(size))
+	{
+		result = (temp[size / 2 - 1] + temp[size / 2]) / 2.0;
+	}
+	else
+	{
+		result = temp[size / 2];
+	}
+	return result;
+}
+
+
+float MAD(float data[], int size)
+{
+	float med;
+	float tempData[MAXSIZEMEDIAN] = { 0 };
+	float result = 0;
+
+	med = median(data, size);
+	for (int i = 0; i < size; i++)
+	{
+
+		tempData[i] = absolute(data[i] - med);
+	}
+	result = median(tempData, size);
+	return result;
+}
 
 int describeStats(float statsResult[7], float data[], int size)
 {

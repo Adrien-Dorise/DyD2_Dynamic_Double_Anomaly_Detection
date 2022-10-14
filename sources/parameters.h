@@ -12,12 +12,16 @@ It is here that you can input your own data set to set DyD2
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
-#include "uCluster.h"
+
+
 #include <time.h>
-
-
-#define FALSE false
+#include <stdbool.h>
 #define TRUE true
+#define FALSE false
+
+#include "math_HCE.h"
+#include "uCluster.h"
+
 
 
 
@@ -27,11 +31,11 @@ It is here that you can input your own data set to set DyD2
 #define UCLSIZEOUTER 0.01 //Size of all uClusters in the outer map
 #define UCLSIZEINNER 0.05 //Size of all uClusters in the inner map
 #define OUTERFEATURENUMBER 1 //Number of outer features
-#define INNERFEATURENUMBER 5 //Number of inner features
+#define INNERFEATURENUMBER 4 //Number of inner features
 
 #define OUTERDENSITYTHRESHOLD 2 //Min number of sample before outerUcluster being replaced
 #define INNERDENSITYTHRESHOLD 2 //Min number of sample before innerUcluster being replaced
-#define AGELIMIT 100000 //Time before ageing begin (be carefull, as the time is taken into consideration, not the index position)
+#define AGELIMIT 10000 //Time before ageing begin (be carefull, as the time is taken into consideration, not the index position)
 #define AGEPENALTY 0.975 //Penalty given to an old uCluster. It is computed as <density = AGEPENALTY * oldDensity>. Must be float
 
 

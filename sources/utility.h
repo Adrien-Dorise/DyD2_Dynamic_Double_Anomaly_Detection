@@ -1,13 +1,18 @@
-/*
-Contains basic tools needed to process DyD2.
-It regroups tools such as scaling, array shifting and so on.
-*/
-
 #pragma once
 #ifndef UTILITY_H
 #define UTILITY_H
 
 #include "parameters.h"
+
+/*
+* isEven
+* Check if a number is odd or even
+* Input:
+*	number: type = int, number to check
+* Output: type = bool, TRUE if even, FALSE if odd
+*/
+bool isEven(int number);
+
 
 /*
 * minMax
@@ -108,6 +113,16 @@ void scale(float data[], float min, float max, int size);
 * Output: None
 */
 void scale2D(float returnedMinMax[], float data[][OUTERFEATURENUMBER], int indexSize, int featureNumber);
+
+/*
+* sortArray
+* Sort an array from smallest to highes value
+* Input:
+*	data: type = float[], data set to sort
+*	size: type = int, length of data
+* Output: None
+*/
+void sortArray(float data[], int size);
 
 
 #endif

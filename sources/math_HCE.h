@@ -1,13 +1,11 @@
-/*
-Contains the basic tools to do mathematical calculations
-*/
-
-
 #pragma once
 #ifndef MATH_HCE_H
 #define MATH_HCE_H
 
 #define MAXROW 6
+#define MAXSIZEMEDIAN 1000
+
+
 
 
 /*
@@ -31,7 +29,7 @@ float power(float data, int exponent);
 
 /*
 * sqroot
-* Return the the square root value of given number 
+* Return the the square root value of given number
 * //https://ourcodeworld.com/articles/read/884/how-to-get-the-square-root-of-a-number-without-using-the-sqrt-function-in-c
 * Input:
 *	data: type = float, value to consider for square root operation
@@ -114,6 +112,29 @@ float skewness(float data[], int size);
 * Output: type = float, kurtosis of data set
 */
 float kurtosis(float data[], int size);
+
+/*
+* median
+* Compute the median of a data set
+* More info: https://en.wikipedia.org/wiki/Median
+* Input:
+*	data: type = float[], data set to analyse
+*	size: type = int, length of data
+* Output: type = float, median of data set
+*/
+float median(float data[], int size);
+
+/*
+* MAD
+* Compute the median absolute deviation of a data set
+* More info: https://en.wikipedia.org/wiki/Median_absolute_deviation
+* Input:
+*	data: type = float[], data set to analyse
+*	size: type = int, length of data
+* Output: type = float, MAD of data set
+*/
+float MAD(float data[], int size);
+
 
 /*
 * describeStats

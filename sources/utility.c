@@ -1,6 +1,18 @@
 #include "utility.h"
 
 
+bool isEven(int number)
+{
+	if (number % 2 == 0)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
 void minMax(float result[2], float data[], int size)
 {
 	float min, max;
@@ -82,7 +94,7 @@ void scale2D(float minMax[], float data[][OUTERFEATURENUMBER], int indexSize, in
 			data[i][j] = (data[i][j] - minMax[0]) / (minMax[1] - minMax[0]);
 		}
 	}
-	
+
 	/*
 	for (int index = 0; index < indexSize; index++, data++)
 	{
@@ -146,4 +158,27 @@ void shift2DInner(float array[][INNERFEATURENUMBER], int size, float newValues[]
 		array[size - 1][j] = newValues[j];
 	}
 
+}
+
+
+
+void sortArray(float data[], int size)
+{
+	int min;
+	float temp;
+
+	for (int i = 0; i < size - 1; ++i)
+	{
+		min = i;
+		for (int j = i + 1; j < size; ++j)
+		{
+			if (data[j] < data[min])
+			{
+				min = j;
+			}
+		}
+		temp = data[min];
+		data[min] = data[i];
+		data[i] = temp;
+	}
 }

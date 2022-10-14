@@ -253,10 +253,13 @@ void featureExtraction(float window[], struct sample* Sw, float date)
 	features[0] = mean(window, WINDOWSIZE);
 	features[1] = variance(window, WINDOWSIZE);
 	features[2] = strdDev(window, WINDOWSIZE);
-	features[3] = minMaxRes[0];
-	features[4] = minMaxRes[1];
-	features[5] = skewness(window, WINDOWSIZE);
-	features[6] = kurtosis(window, WINDOWSIZE);
+	features[3] = MAD(window, WINDOWSIZE);
+	features[4] = minMaxRes[0];
+	features[5] = minMaxRes[1];
+	//features[6] = skewness(window, WINDOWSIZE);
+	//features[7] = kurtosis(window, WINDOWSIZE);
+
+
 
 
 
