@@ -1,0 +1,135 @@
+[Global_parameters]
+Min_value: 6.000000
+Max_value: 17.000000
+
+[uCluster]
+uCluster_number: 0
+feature_number: 1
+data_number: 11640
+density: 100.000000
+size: 0.010000
+center: 0.454570
+score: 0.000000
+creation_date: 200
+last_update: 80220
+
+[uCluster]
+uCluster_number: 1
+feature_number: 1
+data_number: 6727
+density: 100.000000
+size: 0.010000
+center: 0.363624
+score: 0.000000
+creation_date: 200
+last_update: 80060
+
+[uCluster]
+uCluster_number: 2
+feature_number: 1
+data_number: 16665
+density: 100.000000
+size: 0.010000
+center: 0.545463
+score: 0.000000
+creation_date: 200
+last_update: 80210
+
+[uCluster]
+uCluster_number: 3
+feature_number: 1
+data_number: 1046
+density: 100.000000
+size: 0.010000
+center: 0.727278
+score: 0.000000
+creation_date: 200
+last_update: 79920
+
+[uCluster]
+uCluster_number: 4
+feature_number: 1
+data_number: 4538
+density: 100.000000
+size: 0.010000
+center: 0.636393
+score: 0.000000
+creation_date: 200
+last_update: 79970
+
+[uCluster]
+uCluster_number: 5
+feature_number: 1
+data_number: 2183
+density: 100.000000
+size: 0.010000
+center: 0.272725
+score: 0.000000
+creation_date: 200
+last_update: 79890
+
+[uCluster]
+uCluster_number: 6
+feature_number: 1
+data_number: 119
+density: 100.000000
+size: 0.010000
+center: 0.818182
+score: 0.000000
+creation_date: 200
+last_update: 76510
+
+[uCluster]
+uCluster_number: 7
+feature_number: 1
+data_number: 45
+density: 100.000000
+size: 0.010000
+center: 0.090909
+score: 0.000000
+creation_date: 200
+last_update: 200
+
+[uCluster]
+uCluster_number: 8
+feature_number: 1
+data_number: 259
+density: 100.000000
+size: 0.010000
+center: 0.181819
+score: 0.000000
+creation_date: 200
+last_update: 76680
+
+[uCluster]
+uCluster_number: 9
+feature_number: 1
+data_number: 24
+density: 100.000000
+size: 0.010000
+center: 0.909091
+score: 0.000000
+creation_date: 200
+last_update: 73240
+
+[uCluster]
+uCluster_number: 10
+feature_number: 1
+data_number: 9222
+density: 100.000000
+size: 0.010000
+center: 0.545446
+score: 0.000000
+creation_date: 200
+last_update: 80210
+
+[uCluster]
+uCluster_number: 11
+feature_number: 1
+data_number: 9055
+density: 100.000000
+size: 0.010000
+center: 0.454570
+score: 0.000000
+creation_date: 200
+last_update: 80220

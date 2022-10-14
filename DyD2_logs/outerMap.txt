@@ -1,0 +1,135 @@
+[Global_parameters]
+Min_value: 6.000000
+Max_value: 17.000000
+
+[uCluster]
+uCluster_number: 0
+feature_number: 1
+data_number: 2683
+density: 100.000000
+size: 0.010000
+center: 0.454545
+score: 0.000000
+creation_date: 0
+last_update: 9990
+
+[uCluster]
+uCluster_number: 1
+feature_number: 1
+data_number: 1482
+density: 100.000000
+size: 0.010000
+center: 0.363636
+score: 0.000000
+creation_date: 1
+last_update: 9995
+
+[uCluster]
+uCluster_number: 2
+feature_number: 1
+data_number: 3970
+density: 100.000000
+size: 0.010000
+center: 0.545455
+score: 0.000000
+creation_date: 3
+last_update: 9999
+
+[uCluster]
+uCluster_number: 3
+feature_number: 1
+data_number: 234
+density: 100.000000
+size: 0.010000
+center: 0.727273
+score: 0.000000
+creation_date: 8
+last_update: 9867
+
+[uCluster]
+uCluster_number: 4
+feature_number: 1
+data_number: 994
+density: 100.000000
+size: 0.010000
+center: 0.636364
+score: 0.000000
+creation_date: 9
+last_update: 10000
+
+[uCluster]
+uCluster_number: 5
+feature_number: 1
+data_number: 490
+density: 100.000000
+size: 0.010000
+center: 0.272727
+score: 0.000000
+creation_date: 18
+last_update: 9993
+
+[uCluster]
+uCluster_number: 6
+feature_number: 1
+data_number: 39
+density: 100.000000
+size: 0.010000
+center: 0.818182
+score: 0.000000
+creation_date: 112
+last_update: 9884
+
+[uCluster]
+uCluster_number: 7
+feature_number: 1
+data_number: 32
+density: 100.000000
+size: 0.010000
+center: 0.090909
+score: 0.000000
+creation_date: 211
+last_update: 9875
+
+[uCluster]
+uCluster_number: 8
+feature_number: 1
+data_number: 64
+density: 100.000000
+size: 0.010000
+center: 0.181818
+score: 0.000000
+creation_date: 443
+last_update: 9500
+
+[uCluster]
+uCluster_number: 9
+feature_number: 1
+data_number: 8
+density: 100.000000
+size: 0.010000
+center: 0.909091
+score: 0.000000
+creation_date: 469
+last_update: 9429
+
+[uCluster]
+uCluster_number: 10
+feature_number: 1
+data_number: 4
+density: 100.000000
+size: 0.010000
+center: 0.000000
+score: 0.000000
+creation_date: 731
+last_update: 2848
+
+[uCluster]
+uCluster_number: 11
+feature_number: 1
+data_number: 2
+density: 100.000000
+size: 0.010000
+center: 1.000000
+score: 0.000000
+creation_date: 8438
+last_update: 8438
