@@ -2,6 +2,7 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include <stdbool.h>
 #include "parameters.h"
 
 /*
@@ -9,7 +10,7 @@
 * Check if a number is odd or even
 * Input:
 *	number: type = int, number to check
-* Output: type = bool, TRUE if even, FALSE if odd
+* Output: type = bool, true if even, false if odd
 */
 bool isEven(int number);
 

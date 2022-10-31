@@ -18,8 +18,9 @@ Note to self: Creating a save system in C is HELL !!!
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include "uCluster.h"
 #include "parameters.h"
-//#include "uCluster.h"
 
 
 #define PARSERSIZE 30
@@ -33,7 +34,7 @@ Note to self: Creating a save system in C is HELL !!!
 * {Global_parameters]
 * Min_value : X
 * Max_value : X
-* 
+*
 * [uCluster]
 * uCluster_number : X
 * feature_number : X
@@ -78,7 +79,7 @@ void initParser(struct parser* p);
 /*
 * CreateFile
 * Creates a new file after checking its existence. If the file already exists, a message prompt is displayed to aske about its overwriting.
-* Input: 
+* Input:
 *	filename: type = string, the path of the file you want to create (C:example\\path\\file.txt)
 *	autoOverwrite: type = bool, if set to false, we check and send a warning if the file already exist. If true, we automatically overwrite the file
 * Output: error value
@@ -109,7 +110,7 @@ int writeData(char fileName[], float data[], int dataSize);
 *	skipingLine: type = int, Number of lines to skip (in case of header/title in the file)
 * Output: type = int, error value or the number of data lines found if no error
 */
-int readData(float data[][LABELNUMBERDYD2], char fileName[], int rows, int skippingLine);
+int readData(float data[][ROWNUMBER], char fileName[], int rows, int skippingLine);
 
 
 /*
@@ -190,6 +191,6 @@ int loadMap(struct map* M, char fileName[], float minMaxValues[2]);
 *	skippingLines: type = int, number of lines to skip (in case of header in the label file)
 * Output: type = int, error value or number of lines in the label file.
 */
-int getLabels(char labelFile[], int labels[][LABELNUMBERDYD2], int labelsNumber, int skippingLines);
+int getLabels(char labelFile[], float labels[][LABELNUMBERDYD2], int labelsNumber, int skippingLines);
 
 #endif

@@ -5,11 +5,11 @@ bool isEven(int number)
 {
 	if (number % 2 == 0)
 	{
-		return TRUE;
+		return true;
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 }
 

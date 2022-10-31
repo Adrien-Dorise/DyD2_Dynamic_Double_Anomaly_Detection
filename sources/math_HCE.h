@@ -5,7 +5,7 @@
 #define MAXROW 6
 #define MAXSIZEMEDIAN 1000
 
-
+#include "utility.h"
 
 
 /*

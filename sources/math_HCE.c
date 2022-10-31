@@ -218,7 +218,7 @@ float MAD(float data[], int size)
 int describeStats(float statsResult[7], float data[], int size)
 {
 	int featureNumber;
-	float minMaxRes[2];
+	float minMaxRes[2] = { 0 };
 	minMax(minMaxRes, data, size);
 
 	statsResult[0] = minMaxRes[0];

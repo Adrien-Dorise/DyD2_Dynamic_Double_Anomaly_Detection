@@ -19,7 +19,32 @@ https://hal.laas.fr/hal-03609573v2
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <time.h>
 #include "parameters.h"
+#include "uCluster.h"
+#include "inout.h"
+
+
+
+float setFromFile[FILESIZEMAX][OUTERFEATURENUMBER + 1];
+float dataSetFromFile[FILESIZEMAX][OUTERFEATURENUMBER];
+float testDate[FILESIZEMAX];
+float outerSetDyD2[FILESIZEMAX][OUTERFEATURENUMBER];
+float innerSetDyD2[FILESIZEMAX][INNERFEATURENUMBER];
+float windowSetDyD2[WINDOWSIZE][OUTERFEATURENUMBER];
+float dataSave[FILESIZEMAX][OUTERFEATURENUMBER * 2]; // [raw data, scale raw data]
+float logSave[FILESIZEMAX][LOGROWDYD2]; // [iterationSave, timeSave, outerDetectionStatus, innerdetectionStatus, resetStatus]
+float faultLogSave[FILESIZEMAX][FAULTLOGROWDYD2]; // [faultIteration, faultTime, faultCodeValue]
+float testLabelsDyD2[FILESIZEMAX][LABELNUMBERDYD2];
+float execTimeDyD2;
+clock_t t1DyD2;
+clock_t t2DyD2;
+struct map outerMapDyD2, innerMapDyD2;
+struct uCluster ruptMapDyD2;
+struct sample Sp, Sw;
+
+
 
 /*
 * training 
@@ -165,7 +190,7 @@ void mapUpdate(struct sample S, struct map* map, float date, float ageThreshold,
 *	faultLogSave: type = float[numberOfFaults][3], data used to create the fault log file
 * Output: None
 */
-void resultSave(char postMapPath[], char logFolderPath[], int faultIter, float dataSave[][OUTERFEATURENUMBER*2], int dataSize, float logSave[][5], float faultLogSave[][3]);
+int resultSave(char postMapPath[], char logFolderPath[], int faultIter, float dataSave[][OUTERFEATURENUMBER*2], int dataSize, float logSave[][5], float faultLogSave[][3]);
 
 /*
 * resetDyD2Version0

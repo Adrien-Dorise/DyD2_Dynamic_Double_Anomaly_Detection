@@ -15,9 +15,10 @@ void training(float trainingSet[][OUTERFEATURENUMBER], int trainingSize, struct 
 	struct sample S;
 	struct uCluster uCl;
 	float sizeOuter[OUTERFEATURENUMBER] = { 0 }, sizeInner[INNERFEATURENUMBER] = {0};
-	bool isReach = FALSE;
+	bool isReach = false;
 	int reachSize = 0;
 	int reachablesID[MAXUCLUSTERS] = { 0 };
+	float tempWindow[WINDOWSIZE] = { 0 };
 
 
 	printf("\nDyD2 training phase start\n");
@@ -95,7 +96,12 @@ void training(float trainingSet[][OUTERFEATURENUMBER], int trainingSize, struct 
 		}
 		else
 		{
-			featureExtraction(windowSetDyD2, &S, i);
+			//For now, the feature extraction is only done for one outer features
+			for (int p = 0; p < WINDOWSIZE; p++)
+			{
+				tempWindow[p] = windowSetDyD2[p][0];
+			}
+			featureExtraction(tempWindow, &S, i);
 			for (int feat = 0; feat < INNERFEATURENUMBER; feat++)
 			{
 				tempInner[feat] = S.features[feat];
@@ -133,7 +139,12 @@ void training(float trainingSet[][OUTERFEATURENUMBER], int trainingSize, struct 
 		}
 		else
 		{
-			featureExtractionScaled(windowSetDyD2, &S, i,innerMinMax);
+			//For now, the feature extraction is only done for one outer features
+			for (int p = 0; p < WINDOWSIZE; p++)
+			{
+				tempWindow[p] = windowSetDyD2[p][0];
+			}
+			featureExtractionScaled(tempWindow, &S, i,innerMinMax);
 
 			//We have to see if the sample is inside existing uCluster
 			isReach = isReachable(*innerMap, S);
@@ -239,9 +250,10 @@ bool changePointDetection(struct sample Sp, struct uCluster* uClRupt)
 
 bool anomalyDetection(struct sample S, struct map map)
 {
-	//Return true if sample not reachable => An anomoaly is detected
+	//Return true if sample not reachable => An anomaly is detected
 	return !isReachable(map, S);	
 }
+
 
 void featureExtraction(float window[], struct sample* Sw, float date)
 {
@@ -277,10 +289,11 @@ void featureExtractionScaled(float window[], struct sample* Sw,  float date, flo
 	features[0] = mean(window, WINDOWSIZE);
 	features[1] = variance(window, WINDOWSIZE);
 	features[2] = strdDev(window, WINDOWSIZE);
-	features[3] = minMaxRes[0];
-	features[4] = minMaxRes[1];
-	//features[5] = skewness(window, WINDOWSIZE);
-	//features[6] = kurtosis(window, WINDOWSIZE);
+	features[3] = MAD(window, WINDOWSIZE);
+	features[4] = minMaxRes[0];
+	features[5] = minMaxRes[1];
+	//features[6] = skewness(window, WINDOWSIZE);
+	//features[7] = kurtosis(window, WINDOWSIZE);
 
 	scale(features, dataMinMax[0], dataMinMax[1], INNERFEATURENUMBER);
 	initSample(Sw, INNERFEATURENUMBER, date, features);
@@ -371,7 +384,7 @@ void mapUpdate(struct sample S, struct map* map, float date, float ageThreshold,
 	int a = 1;
 }
 
-void resultSave(char postMapPath[], char logFolderPath[], int faultIter, float dataSave[][OUTERFEATURENUMBER * 2], int dataSize, float logSave[][5], float faultLogSave[][3])
+int resultSave(char postMapPath[], char logFolderPath[], int faultIter, float dataSave[][OUTERFEATURENUMBER * 2], int dataSize, float logSave[][5], float faultLogSave[][3])
 {
 	char logPath[MAXPATHLENGTH] = "";
 	char faultLogPath[MAXPATHLENGTH] = "";
@@ -447,6 +460,7 @@ void resultSave(char postMapPath[], char logFolderPath[], int faultIter, float d
 	saveMap(innerMapDyD2, postInnerPath, innerMapDyD2.trainMinMax);
 	
 	printf("Save complete!\n");
+	return 0;
 
 }
 
@@ -594,6 +608,7 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 	bool interrupt = false;
 	int faultIter = 0;
 	int code1Memory[WINDOWSIZE] = { 0 }, code2Memory[WINDOWSIZE] = { 0 };
+	float tempWindow[WINDOWSIZE] = { 0 };
 
 	t1DyD2 = clock();
 
@@ -710,7 +725,12 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 				//Rupture without outer anomaly detected previously
 
 				//Feature extraction phase
-				featureExtractionScaled(windowSetDyD2, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
+				//For now, the feature extraction is only done for one outer features
+				for (int p = 0; p < WINDOWSIZE; p++)
+				{
+					tempWindow[p] = windowSetDyD2[p][0];
+				}
+				featureExtractionScaled(tempWindow, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
 				
 				//Inner anomaly detection phase
 				if (anomalyDetection(Sw, innerMapDyD2))
@@ -754,7 +774,12 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 				{
 					lastPoint[feat] = windowSetDyD2[0][feat];
 				}
-				featureExtractionScaled(windowSetDyD2, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
+				//For now, the feature extraction is only done for one outer features
+				for (int p = 0; p < WINDOWSIZE; p++)
+				{
+					tempWindow[p] = windowSetDyD2[p][0];
+				}
+				featureExtractionScaled(tempWindow, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
 				mapUpdate(Sw, &innerMapDyD2, testDate[iteration - WINDOWSIZE], AGELIMIT, AGEPENALTY, INNERDENSITYTHRESHOLD, SCORETHRESHOLD, INNERCHRISTOFFELPATH);
 
 			}
@@ -770,10 +795,15 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 					lastPoint[feat] = windowSetDyD2[0][feat];
 					lastPointScaled[feat] = lastPoint[feat];
 				}
+				//For now, the feature extraction is only done for one outer features
+				for (int p = 0; p < WINDOWSIZE; p++)
+				{
+					tempWindow[p] = windowSetDyD2[p][0];
+				}
 				scale(lastPointScaled, outerMapDyD2.trainMinMax[0], outerMapDyD2.trainMinMax[1], OUTERFEATURENUMBER);
 				initSample(&Sp, OUTERFEATURENUMBER, testDate[iteration - WINDOWSIZE], lastPointScaled);
 				mapUpdate(Sp, &outerMapDyD2, testDate[iteration - WINDOWSIZE], AGELIMIT, AGEPENALTY, OUTERDENSITYTHRESHOLD, SCORETHRESHOLD, OUTERCHRISTOFFELPATH);
-				featureExtractionScaled(windowSetDyD2, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
+				featureExtractionScaled(tempWindow, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
 				mapUpdate(Sw, &innerMapDyD2, testDate[iteration- WINDOWSIZE], AGELIMIT, AGEPENALTY, INNERDENSITYTHRESHOLD, SCORETHRESHOLD, INNERCHRISTOFFELPATH);
 			}
 		}
@@ -783,8 +813,8 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 		//Reset the aglorithm in case of anomaly
 		//if (resetDyD2Version0(&interrupt, &code1, &code2, code1Memory, code2Memory)) //Always reset
 		if (resetDyD2Version1(&interrupt, outerMapDyD2, lastPointScaled, &code1, &code2, code1Memory, code2Memory)) //Reset with outermap
-		//if (resetDyD2Version2(&interrupt, testLabelsDyD2[iteration][LABELRAW], FAULTVALUE, &code1, &code2, code1Memory, code2Memory)) //Reset1 + Reset2
-		//if (resetDyD2Version3(&interrupt, outerMapDyD2, lastPoint, testLabelsDyD2[iteration][LABELRAW], FAULTVALUE, &code1, &code2, code1Memory, code2Memory)) //Reset with labels
+		//if (resetDyD2Version2(&interrupt, testLabelsDyD2[iteration][LABELROW], FAULTVALUE, &code1, &code2, code1Memory, code2Memory)) //Reset1 + Reset2
+		//if (resetDyD2Version3(&interrupt, outerMapDyD2, lastPoint, testLabelsDyD2[iteration][LABELROW], FAULTVALUE, &code1, &code2, code1Memory, code2Memory)) //Reset with labels
 		{
 			logSave[iteration][4] = 1;
 		}
@@ -829,31 +859,31 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 void confusionMatrix(int results[4], float logData[][LOGROWDYD2], float testLabels[][LABELNUMBERDYD2], int trueLabelRow, int faultValue, int size, bool doAnomalyRemoval)
 {
 	// TP/FP/FN/TN
-	bool isFaultPrediction = FALSE;
-	bool isFaultLabel = FALSE;
+	bool isFaultPrediction = false;
+	bool isFaultLabel = false;
 
 	for (int i = 0; i < size; i++)
 	{
 		if (logData[i][2] == -1 || logData[i][3] == -2)
 		{
-			isFaultPrediction = TRUE;
+			isFaultPrediction = true;
 		}
 		else
 		{
-			isFaultPrediction = FALSE;
+			isFaultPrediction = false;
 		}
 		
 		if (testLabels[i][trueLabelRow] == faultValue)
 		{
-			isFaultLabel = TRUE;
+			isFaultLabel = true;
 		}
 		else
 		{
-			isFaultLabel = FALSE;
+			isFaultLabel = false;
 		}
 
 		//TP
-		if (isFaultPrediction == TRUE && isFaultLabel == TRUE) 
+		if (isFaultPrediction == true && isFaultLabel == true) 
 		{
 			results[0]++;
 
@@ -866,11 +896,11 @@ void confusionMatrix(int results[4], float logData[][LOGROWDYD2], float testLabe
 					i++;
 					if (testLabels[i][trueLabelRow] == faultValue)
 					{
-						isFaultLabel = TRUE;
+						isFaultLabel = true;
 					}
 					else
 					{
-						isFaultLabel = FALSE;
+						isFaultLabel = false;
 					}
 					results[0]++;
 				}
@@ -880,19 +910,19 @@ void confusionMatrix(int results[4], float logData[][LOGROWDYD2], float testLabe
 		
 		
 		//FP
-		if (isFaultPrediction == TRUE && isFaultLabel == FALSE)
+		if (isFaultPrediction == true && isFaultLabel == false)
 		{
 			results[1]++;
 		}
 
 		//FN
-		if (isFaultPrediction == FALSE && isFaultLabel == TRUE)
+		if (isFaultPrediction == false && isFaultLabel == true)
 		{
 			results[2]++;
 		}
 
 		//TN
-		if (isFaultPrediction == FALSE && isFaultLabel == FALSE)
+		if (isFaultPrediction == false && isFaultLabel == false)
 		{
 			results[3]++;
 		}
@@ -945,10 +975,10 @@ void printResults(int results[4], float time[], char trainSet[], char testSet[],
 void validation(char trainFolder[], int trainIteration, char testFolder[], int testIteration, bool doAnomalyRemoval)
 {
 	//File parameters
-	char trainFileName[] = "\\normalCurrent.txt";
-	char testNormalFileName[] = "\\normalCurrent.txt";
-	char testFileName[] = "\\dataSet.txt";
-	char labelFileName[] = "\\statusData.txt";
+	char trainFileName[] = "/normalCurrent.txt";
+	char testNormalFileName[] = "/normalCurrent.txt";
+	char testFileName[] = "/dataSet.txt";
+	char labelFileName[] = "/statusData.txt";
 	char mkdirStart[] = "mkdir ";
 	char trainFile[500];
 	char testFile[500];
@@ -993,7 +1023,7 @@ void validation(char trainFolder[], int trainIteration, char testFolder[], int t
 			//Testing
 			getLabels(labelFile, testLabelsDyD2, LABELNUMBERDYD2, LABELSKIPPINGLINE);
 			testSize = onlinePhase(testFile, POSTMAPPATH, LOGPATH);
-			confusionMatrix(confMatrix, logSave, testLabelsDyD2, LABELRAW, FAULTVALUE, testSize, doAnomalyRemoval);
+			confusionMatrix(confMatrix, logSave, testLabelsDyD2, LABELROW, FAULTVALUE, testSize, doAnomalyRemoval);
 			execTime[testIt-1] = execTimeDyD2;
 		}
 

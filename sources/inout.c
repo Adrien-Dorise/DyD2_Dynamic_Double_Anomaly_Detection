@@ -4,7 +4,7 @@
 
 void initParser(struct parser* p)
 {
-	
+
 	p->globalParametersNumber = 2;
 	strcpy(p->globalParameters, "[Global_parameters]\n");
 	strcpy(p->minValue, "Min_value: ");
@@ -25,14 +25,13 @@ void initParser(struct parser* p)
 
 int createFile(char fileName[], bool autoOverwrite)
 {
-	errno_t err;
 	FILE* pFile;
 	char input[10];
 
 	if (!autoOverwrite) //We do not check if file already exist if autoOverwritte parameter is true
 	{
-		err = fopen_s(&pFile, fileName, "r");
-		if (err == 0)
+		pFile = fopen(fileName, "r");
+		if (pFile == NULL)
 		{
 			fclose(pFile);
 			printf("Warning in createFile: The file %s already exist\nDo you want to delete it and continue ? (y/n)\n", fileName);
@@ -48,23 +47,22 @@ int createFile(char fileName[], bool autoOverwrite)
 
 		}
 	}
-	
 
 
-	err = fopen_s(&pFile, fileName, "w");
-	if (err == 0)
+
+	pFile = fopen(fileName, "w");
+	if (pFile != NULL)
 	{
 		fclose(pFile);
 		printf("\nThe file %s was created\n", fileName);
 	}
 	else
 	{
-		printf("\nWARNING in createFile: The file %s was NOT created, error is: %s\n", fileName,  strerror(errno));
-		printf("Check if the folder already exits\n");
+		printf("\nWARNING in createFile: The file %s was NOT created. Check if the folder already exits\n");
 		return 1;
 	}
 
-	
+
 	return 0;
 
 }
@@ -103,21 +101,21 @@ int writeData(char fileName[], float data[], int dataSize)
 
 
 
-int readData(float data[][LABELNUMBERDYD2], char fileName[], int rows, int skippingLine)
+int readData(float data[][ROWNUMBER], char fileName[], int rows, int skippingLine)
 {
 	//If error in this fonction, check for the delimiter in dataSplit !
 
 	FILE* pFile;
 	char dataTemp[MAXCHARPERLINE];
 	char* dataSplit;
-	int index = 0, arrayIndex= 0, row = 0, arrayRow = 0, actualLine = 0;
+	int index = 0, arrayIndex = 0, row = 0, arrayRow = 0, actualLine = 0;
 
-	
+
 
 	pFile = fopen(fileName, "r");
 	if (pFile == NULL)
 	{
-		printf("\nERROR getData: error opening file %s\n",fileName);
+		printf("\nERROR getData: error opening file %s\n", fileName);
 		return 1;
 	}
 
@@ -131,19 +129,19 @@ int readData(float data[][LABELNUMBERDYD2], char fileName[], int rows, int skipp
 			row = 0;
 			while (row < rows) //We continune to search for value until we hit the max number of rows parameter
 			{
-				if (index * row >= FILESIZEMAX * LABELNUMBERDYD2)
+				if (index * row >= FILESIZEMAX * ROWNUMBER)
 				{
-					printf("\nWARNING in readData: data file size (%i) is higher than max size (%i) of data array \n",index*row, FILESIZEMAX*LABELNUMBERDYD2);
+					printf("\nWARNING in readData: data file size (%i) is higher than max size (%i) of data array \n", index * row, FILESIZEMAX * LABELNUMBERDYD2);
 					return -1;
 				}
 
-				
+
 				sscanf(dataSplit, "%f", &data[arrayIndex][arrayRow]);
 				dataSplit = strtok(NULL, ",");
-				
+
 				row++;
 				arrayRow++;
-				if (arrayRow >= LABELNUMBERDYD2)
+				if (arrayRow >= ROWNUMBER)
 				{
 					arrayIndex++;
 					arrayRow = 0;
@@ -157,6 +155,7 @@ int readData(float data[][LABELNUMBERDYD2], char fileName[], int rows, int skipp
 	fclose(pFile);
 	return index;
 }
+
 
 int writeFile(char fileName[], char string[])
 {
@@ -271,7 +270,7 @@ int loadUCluster(struct uCluster* uCl, char fileName[], int desiredUClusterNumbe
 		printf("ERROR getData: error opening file %s\n", fileName);
 		return 1;
 	}
-	
+
 	while (fgets(dataTemp, MAXCHARPERLINE, pFile) != NULL && !isDesiredUClusterFound)
 	{
 		//See this for strncmphttp: www.cplusplus.com/reference/cstring/strncmp/
@@ -379,7 +378,7 @@ int saveMap(struct map M, char fileName[], float minMaxValues[2])
 	float min[1] = { minMaxValues[0] };
 	float max[1] = { minMaxValues[1] };
 
-	createFile(fileName, TRUE);
+	createFile(fileName, true);
 	writeFile(fileName, "[Global_parameters]\n");
 	writeFile(fileName, "Min_value: ");
 	writeData(fileName, min, 1);
@@ -413,7 +412,7 @@ int loadMap(struct map* M, char fileName[], float minMaxValues[2])
 		return 1;
 	}
 
-	while (fgets(dataTemp, MAXCHARPERLINE, pFile) != NULL) 
+	while (fgets(dataTemp, MAXCHARPERLINE, pFile) != NULL)
 	{
 		//Get global parameters
 		if (strncmp(dataTemp, p.globalParameters, strlen(p.globalParameters)) == 0) //Means we found the token [Global_parameters]
@@ -450,7 +449,7 @@ int loadMap(struct map* M, char fileName[], float minMaxValues[2])
 			uClusterNumber++;
 		}
 
-		
+
 	}
 
 
@@ -465,10 +464,56 @@ int loadMap(struct map* M, char fileName[], float minMaxValues[2])
 }
 
 
-int getLabels(char labelFile[], int labels[][LABELNUMBERDYD2], int labelsNumber, int skippingLines)
+int getLabels(char labelFile[], float labels[][LABELNUMBERDYD2], int labelsNumber, int skippingLines)
 {
-	int dataLines;
 
-	dataLines = readData(labels, labelFile, labelsNumber, skippingLines);
-	return dataLines;
+	FILE* pFile;
+	char dataTemp[MAXCHARPERLINE];
+	char* dataSplit;
+	int index = 0, arrayIndex = 0, row = 0, arrayRow = 0, actualLine = 0;
+
+
+
+	pFile = fopen(labelFile, "r");
+	if (pFile == NULL)
+	{
+		printf("\nERROR getData: error opening file %s\n", labelFile);
+		return 1;
+	}
+
+	index = arrayIndex = actualLine = arrayRow = 0;
+	while (fgets(dataTemp, MAXCHARPERLINE, pFile) != NULL) //Get the whole line
+	{
+		if (actualLine >= skippingLines)
+		{
+			//For below, see https://www.codingame.com/playgrounds/14213/how-to-play-with-strings-in-c/string-split
+			dataSplit = strtok(dataTemp, ","); //Divide the line into values seperated by a comma ","
+			row = 0;
+			while (row < labelsNumber) //We continune to search for value until we hit the max number of rows parameter
+			{
+				if (index * row >= FILESIZEMAX * LABELNUMBERDYD2)
+				{
+					printf("\nWARNING in readData: data file size (%i) is higher than max size (%i) of data array \n", index * row, FILESIZEMAX * LABELNUMBERDYD2);
+					return -1;
+				}
+
+
+				sscanf(dataSplit, "%f", &labels[arrayIndex][arrayRow]);
+				dataSplit = strtok(NULL, ",");
+
+				row++;
+				arrayRow++;
+				if (arrayRow >= LABELNUMBERDYD2)
+				{
+					arrayIndex++;
+					arrayRow = 0;
+				}
+			}
+			index++;
+		}
+		actualLine++;
+	}
+
+	fclose(pFile);
+	return index;
 }

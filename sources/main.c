@@ -1,11 +1,8 @@
 
+#include <stdbool.h>
 #include "parameters.h"
-
-
-//gcc -pg
-//DEBUGGER: valgrind ./myprgm
-
-
+#include "DyD2.h"
+#include "inout.h"
 
 
 void validationMain()
@@ -14,7 +11,7 @@ void validationMain()
 	int trainIteration = 1;
 	char testFolder[] = "H:\\DIAG_RAD\\DataSets\\endThesisValidationData\\simulations\\testSet\\smallLinearDeviationMicroLatch\\datas";
 	int testIteration = 1;
-	bool doAnomalyRemoval = FALSE;
+	bool doAnomalyRemoval = false;
 
 	validation(trainFolder, trainIteration, testFolder, testIteration, doAnomalyRemoval);
 }
@@ -36,7 +33,7 @@ void runDyD2()
 	{
 		
 		getLabels(LABELTESTFILE, testLabelsDyD2, LABELNUMBERDYD2, LABELSKIPPINGLINE);
-		confusionMatrix(confMatrix, logSave, testLabelsDyD2, LABELRAW, FAULTVALUE, testSize, FALSE);
+		confusionMatrix(confMatrix, logSave, testLabelsDyD2, LABELROW, FAULTVALUE, testSize, false);
 		execTime[0] = execTimeDyD2;
 		printResults(confMatrix, execTime, TRAINFILE, TESTFILE, LABELTESTFILE, 1);
 	}
@@ -48,28 +45,28 @@ void runDyD2()
 
 void main()
 {
-	if (DoCrossValidation)
+	if (DOCROSSVALIDATION)
 	{
-		switch (WhichDataSet)
+		switch (WHICHDATASET)
 		{
 			case 0:
-				validation("datas/trainSet/heavyIon/datas", 2, "datas/testSet/heavyIon/datas", 3, FALSE);
+				validation("datas/trainSet/heavyIon/datas", 2, "datas/testSet/heavyIon/datas", 3, false);
 				break;
 		
 			case 1:
-				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/destructiveAnomalies/datas", 4, FALSE);
+				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/destructiveAnomalies/datas", 4, false);
 				break;
 		
 			case 2:
-				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/smallAnomalies/datas", 4, FALSE);
+				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/smallAnomalies/datas", 4, false);
 				break;
 		
 			case 3:
-				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/dynamicDestructiveAnomalies/datas", 2, FALSE);
+				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/dynamicDestructiveAnomalies/datas", 2, false);
 				break;
 		
 			case 4:
-				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/dynamicSmallAnomalies/datas", 2, FALSE);
+				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/dynamicSmallAnomalies/datas", 2, false);
 				break;
 
 			default:
