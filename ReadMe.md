@@ -14,9 +14,9 @@ For now only these data sets are available but other coming from computer simula
 To test the algorithm, refer to the paramters.h file where it is possible to interact with DyD². 
 Note that a build is needed to take the modifications into consideration. 
 A makefile is available to run with custom parameters. 
-For Linuw users: simply run <make> in the terminal.
+For Linuw users: simply run *make* in the terminal.
 For Windows users, you have to download a version of GCC (see: https://dev.to/gamegods3/how-to-install-gcc-in-windows-10-the-easier-way-422j).
-Then, run <mingw32-make> in the terminal.
+Then, run *mingw32-make* in the terminal.
 
 When launching vanilla DyD².exe, it is doing a run on the data sets, giving the confusion matrix.
 
