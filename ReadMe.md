@@ -1,5 +1,10 @@
 Hello and welcome to the GitHub of the Dynamic Double anomaly Detection (DyD²) algorithm.
-Paper available here: https://hal.laas.fr/hal-03609573v2
+
+Paper available here: https://www.sciencedirect.com/science/article/pii/S2405896322005158
+
+If you use DyD² in a scientific publication, I would appreciate citation to the original paper:
+
+
 
 
 -------------------------------------------------------------------------------------------------------------------
@@ -25,6 +30,10 @@ When launching vanilla DyD².exe, it is doing a run on the data sets, giving the
 
 
 Here is a quick introduction to DyD²:
+
+The complete algorigram of DyD² is available in the paper. In addition, a summary is available below:
+<img width="1711" alt="algo" src="https://user-images.githubusercontent.com/71883623/203812553-fe92d72b-f219-413d-a8c0-483c352d07af.png">
+
 At the core of DyD² is a space application that is going to be referred to throughout the description.
 
 Space applications impose many constraints that machine learning algorithms generally do not meet. 
@@ -44,9 +53,8 @@ Thus, the machine learning algorithm DYD2 has been designed to detect single eff
 6. Interpretability: Finally, the last requirement to consider this work is linked to the nature of artificial intelligence fields, and the apparition of black-box models. The algorithm must be as much interpretable, or explainable, as possible. It is well-known that it is complicated to determine precisely how a deep learning algorithm gives a specific prediction. The possibility to explain and understand the results of a model is called interpretability. In the case of space application, the possibility to interpret the prediction seems essential to apply with confidence machine learning detection for radiation faults. It is why tools such as neural networks are not investigated in this work. There is no clear definition to evaluate the interpretability of a model yet, but some indicators can improve its comprehension. DyD² is a deterministic algorithm. Its predictions are not based on probabilities and does not need random initialisation. Also, the evaluation of an anomaly is based on easily explicable concepts such as the notion of reachability and µ-clusters. Finally, tools are developed to visualised the evolution of DyD² through a data set, giving the possibility to explain its predictions.
 
 
-The complete algorigram of DyD² is available in the paper. In addition, a summary is available below:
-<img width="1711" alt="algo" src="https://user-images.githubusercontent.com/71883623/203812553-fe92d72b-f219-413d-a8c0-483c352d07af.png">
+-------------------------------------------------------------------------------------------------------------------
 
 
-Below is diaplyed an example of the dynamic behaviour of DyD². The testing data set is composed of a linear deviation, that is taken in consideration automatically by the detection maps.
+Below is displayed an example of the dynamic behaviour of DyD². The testing data set is composed of a linear deviation, that is taken in consideration automatically by the detection maps.
 <img width="1634" alt="devi_test" src="https://user-images.githubusercontent.com/71883623/203811034-5bf8dc1e-a3d4-4e10-84fc-e549a80cb3df.png">
