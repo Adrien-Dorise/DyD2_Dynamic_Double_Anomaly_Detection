@@ -1,4 +1,8 @@
+# Dynamic Double Anomaly Detection DyD²
+
 Hello and welcome to the GitHub of the Dynamic Double anomaly Detection (DyD²) algorithm.
+
+DyD² is a machine learning method to perform embedded anomaly detection on dynamic systems.
 
 Paper available here: https://www.sciencedirect.com/science/article/pii/S2405896322005158
 
@@ -6,8 +10,8 @@ If you use DyD² in a scientific publication, I would appreciate citation to the
 
 
 
-
 -------------------------------------------------------------------------------------------------------------------
+ ## How to use DyD²
 
 The code here provide all the inner functions of DyD². Moreover, some data sets are given as exampke to experiment.
 These data sets come from heavy-ion testing kindly provided by the CNES. It uses the TILU2 equipment to monitor the events:
@@ -27,9 +31,7 @@ When launching vanilla DyD².exe, it is doing a run on the data sets, giving the
 
 
 -------------------------------------------------------------------------------------------------------------------
-
-
-Here is a quick introduction to DyD²:
+## What is DyD²
 
 The complete algorigram of DyD² is available in the paper. In addition, a summary is available below:
 <img width="1711" alt="algo" src="https://user-images.githubusercontent.com/71883623/203812553-fe92d72b-f219-413d-a8c0-483c352d07af.png">
@@ -54,7 +56,7 @@ Thus, the machine learning algorithm DYD2 has been designed to detect single eff
 
 
 -------------------------------------------------------------------------------------------------------------------
-
+## Examples
 
 Below is displayed an example of the dynamic behaviour of DyD². The testing data set is composed of a linear deviation, that is taken in consideration automatically by the detection maps.
 <img width="1634" alt="devi_test" src="https://user-images.githubusercontent.com/71883623/203811034-5bf8dc1e-a3d4-4e10-84fc-e549a80cb3df.png">
