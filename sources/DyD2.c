@@ -425,11 +425,11 @@ int resultSave(char postMapPath[], char logFolderPath[], int faultIter, float da
 	fprintf(logFile, "age threshold precise uCl: %i\n", INNERDENSITYTHRESHOLD);
 	fprintf(logFile, "score threshold: %f\n", SCORETHRESHOLD);
 	fprintf(logFile, "age penalty: %f\n", AGEPENALTY);
-	fprintf(logFile, "Iteration,Time(s),Value,Scaled_value,Code1,Code2,Reset_State\n");
+	fprintf(logFile, "Iteration,Time(s),Value,Scaled_value,Code_Outer,Code_Inner,Reset_State\n");
 	for (int i = 0; i < dataSize; i++)
 	{
 		//printf("Log: %i / %i\n", i, testSize);
-		//fprintf(logFile, "%i\t%f\t%f\t%f\t%i\t%i\t%i\n", RADiterationSave[i], RADtimeTest[i], RADdata[i], RADdataScale[i], RADcode1Save[i], RADcode2Save[i], RADresetSave[i]);
+		//fprintf(logFile, "%i\t%f\t%f\t%f\t%i\t%i\t%i\n", RADiterationSave[i], RADtimeTest[i], RADdata[i], RADdataScale[i], RADcodeOuterSave[i], RADcodeInnerSave[i], RADresetSave[i]);
 		fprintf(logFile, "%f,%f,%f,%f,%f,%f,%f\n", logSave[i][0], logSave[i][1], dataSave[i][0], dataSave[i][1], logSave[i][2], logSave[i][3], logSave[i][4]);
 
 	}
@@ -465,7 +465,7 @@ int resultSave(char postMapPath[], char logFolderPath[], int faultIter, float da
 }
 
 //Here we always reset DyD2. This option is mostly used when no anomalies are present in the test set.
-bool resetDyD2Version0(bool* interrupt, int* code1, int* code2, int code1Memory[], int code2Memory[])
+bool resetDyD2Version0(bool* interrupt, int* codeOuter, int* codeInner, int codeOuterMemory[], int codeInnerMemory[])
 {
 	struct sample S;
 	bool isReset = false;
@@ -474,12 +474,12 @@ bool resetDyD2Version0(bool* interrupt, int* code1, int* code2, int code1Memory[
 
 		isReset = true;
 		*interrupt = false;
-		*code1 = 0;
-		*code2 = 0;
+		*codeOuter = 0;
+		*codeInner = 0;
 		for (int i = 0; i < WINDOWSIZE; i++)
 		{
-			code1Memory[i] = 0;
-			code2Memory[i] = 0;
+			codeOuterMemory[i] = 0;
+			codeInnerMemory[i] = 0;
 		}
 		
 	}
@@ -488,7 +488,7 @@ bool resetDyD2Version0(bool* interrupt, int* code1, int* code2, int code1Memory[
 
 
 //Here we use DyD2 to determine when it has to reset. When the next sample is reachable by outerMap, DyD2 is reset.
-bool resetDyD2Version1(bool* interrupt, struct map outerMap, float lastPoint[], int* code1, int* code2, int code1Memory[], int code2Memory[])
+bool resetDyD2Version1(bool* interrupt, struct map outerMap, float lastPoint[], int* codeOuter, int* codeInner, int codeOuterMemory[], int codeInnerMemory[])
 {
 	struct sample S;
 	bool isReset = false;
@@ -499,12 +499,12 @@ bool resetDyD2Version1(bool* interrupt, struct map outerMap, float lastPoint[], 
 		{
 			isReset = true;
 			*interrupt = false;
-			*code1 = 0;
-			*code2 = 0;
+			*codeOuter = 0;
+			*codeInner = 0;
 			for (int i = 0; i < WINDOWSIZE; i++)
 			{
-				code1Memory[i] = 0;
-				code2Memory[i] = 0;
+				codeOuterMemory[i] = 0;
+				codeInnerMemory[i] = 0;
 			}
 		}
 	}
@@ -512,7 +512,7 @@ bool resetDyD2Version1(bool* interrupt, struct map outerMap, float lastPoint[], 
 }
 
 //Combination of method 1 and 3
-bool resetDyD2Version2(bool* interrupt, float label, float faultValue, int* code1, int* code2, int code1Memory[], int code2Memory[])
+bool resetDyD2Version2(bool* interrupt, float label, float faultValue, int* codeOuter, int* codeInner, int codeOuterMemory[], int codeInnerMemory[])
 {
 	bool isReset = false;
 	if (*interrupt)
@@ -521,12 +521,12 @@ bool resetDyD2Version2(bool* interrupt, float label, float faultValue, int* code
 		{
 			isReset = true;
 			*interrupt = false;
-			*code1 = 0;
-			*code2 = 0;
+			*codeOuter = 0;
+			*codeInner = 0;
 			for (int i = 0; i < WINDOWSIZE; i++)
 			{
-				code1Memory[i] = 0;
-				code2Memory[i] = 0;
+				codeOuterMemory[i] = 0;
+				codeInnerMemory[i] = 0;
 			}
 		}
 	}
@@ -534,7 +534,7 @@ bool resetDyD2Version2(bool* interrupt, float label, float faultValue, int* code
 }
 
 //Here we use the set labels. While the fault is still active, we interrupot DyD2.
-bool resetDyD2Version3(bool* interrupt, struct map outerMap, float lastPoint[], float label, float faultValue, int* code1, int* code2, int code1Memory[], int code2Memory[])
+bool resetDyD2Version3(bool* interrupt, struct map outerMap, float lastPoint[], float label, float faultValue, int* codeOuter, int* codeInner, int codeOuterMemory[], int codeInnerMemory[])
 {
 	struct sample S;
 	bool isReset = false;
@@ -545,12 +545,12 @@ bool resetDyD2Version3(bool* interrupt, struct map outerMap, float lastPoint[], 
 		{
 			isReset = true;
 			*interrupt = false;
-			*code1 = 0;
-			*code2 = 0;
+			*codeOuter = 0;
+			*codeInner = 0;
 			for (int i = 0; i < WINDOWSIZE; i++)
 			{
-				code1Memory[i] = 0;
-				code2Memory[i] = 0;
+				codeOuterMemory[i] = 0;
+				codeInnerMemory[i] = 0;
 			}
 		}
 	}
@@ -604,10 +604,11 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 	float ruptSize[OUTERFEATURENUMBER] = { 0 };
 	float lastPoint[OUTERFEATURENUMBER] = { 0 };
 	float lastPointScaled[OUTERFEATURENUMBER] = { 0 };
-	int code1 = 0, code2 = 0;
+	int codeOuter = 0, codeInner = 0;
+	bool codeRupt = false;
 	bool interrupt = false;
 	int faultIter = 0;
-	int code1Memory[WINDOWSIZE] = { 0 }, code2Memory[WINDOWSIZE] = { 0 };
+	int codeOuterMemory[WINDOWSIZE] = { 0 }, codeInnerMemory[WINDOWSIZE] = { 0 };
 	float tempWindow[WINDOWSIZE] = { 0 };
 
 	t1DyD2 = clock();
@@ -679,86 +680,84 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 		}
 
 		//Stop DYD2 in case of anomaly
-		if (code1 == -1 || code2 == -2)
+		if (codeOuter == -1 || codeInner == -2)
 		{
 			interrupt = true;
 		}
 
 		if (!interrupt)
 		{
-			
+
 			//Change point detection
 			initSample(&Sp, OUTERFEATURENUMBER, testDate[iteration], lastPointScaled);
-			if (!changePointDetection(Sp, &ruptMapDyD2))
+			codeOuter = 0;
+			codeInner = 0;
+
+			//Change point detection
+			codeRupt = changePointDetection(Sp, &ruptMapDyD2);
+			if (codeRupt) //Rupture is detected
 			{
-				//No rupture detected
-				code1 = 0;
-			}
-			else
-			{
-				//Rupture detected
 				//Outer anomaly detection
 				if (anomalyDetection(Sp, outerMapDyD2))
 				{
 					//Outer anomaly detected
-					code1 = -1;
+					codeOuter = -1;
 					faultLogSave[faultIter][0] = iteration;
 					faultLogSave[faultIter][1] = testDate[iteration];
 					faultLogSave[faultIter][2] = -1;
 					faultIter++;
 				}
 				else
-				{ 
+				{
 					//No outer anomaly detected
-					code1 = 1;
+					codeOuter = 1;
 				}
 			}
+			shiftIntArray(codeOuterMemory, WINDOWSIZE, codeOuter);
+
 
 			//Inner anomaly detection
-			//Update of the code memory
-			shiftIntArray(code1Memory, WINDOWSIZE, code1);
-
-			shift2DOuter(windowSetDyD2, WINDOWSIZE, lastPoint);
-			code2 = 0;
-			if (code1Memory[0] == 1)
+			if (codeOuter != -1)
 			{
-				//Rupture without outer anomaly detected previously
+				shift2DOuter(windowSetDyD2, WINDOWSIZE, lastPoint);
+				if (codeOuterMemory[0] == 1)
+				{
+					//Rupture without outer anomaly detected previously
 
-				//Feature extraction phase
-				//For now, the feature extraction is only done for one outer features
-				for (int p = 0; p < WINDOWSIZE; p++)
-				{
-					tempWindow[p] = windowSetDyD2[p][0];
+					//Feature extraction phase
+					//For now, the feature extraction is only done for one outer features
+					for (int p = 0; p < WINDOWSIZE; p++)
+					{
+						tempWindow[p] = windowSetDyD2[p][0];
+					}
+					featureExtractionScaled(tempWindow, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
+
+					//Inner anomaly detection phase
+					if (anomalyDetection(Sw, innerMapDyD2))
+					{
+						//Inner anomaly detected
+						codeInner = -2;
+						faultLogSave[faultIter][0] = iteration;
+						faultLogSave[faultIter][1] = testDate[iteration];
+						faultLogSave[faultIter][2] = -2;
+						faultIter++;
+					}
+					else
+					{
+						//No inner anomaly detected
+						codeInner = 2;
+					}
 				}
-				featureExtractionScaled(tempWindow, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
-				
-				//Inner anomaly detection phase
-				if (anomalyDetection(Sw, innerMapDyD2))
-				{
-					//Inner anomaly detected
-					code2 = -2;
-					faultLogSave[faultIter][0] = iteration;
-					faultLogSave[faultIter][1] = testDate[iteration];
-					faultLogSave[faultIter][2] = -2;
-					faultIter++;
-				}
-				else
-				{
-					//No inner anomaly detected
-					code2 = 2;
-				}
+				//End of detection
 			}
-			shiftIntArray(code2Memory, WINDOWSIZE, code2);
-			//End of detection
+			shiftIntArray(codeInnerMemory, WINDOWSIZE, codeInner);
 
-
-			
 
 
 			//Maps update
 
 			//Outer map update with current data point and inner map with first point of window
-			if (code1 == 0 && code2 == 0)
+			if (codeOuter == 0 && codeInner == 0)
 			{
 				mapUpdate(Sp, &outerMapDyD2, testDate[iteration], AGELIMIT, AGEPENALTY, OUTERDENSITYTHRESHOLD, SCORETHRESHOLD, OUTERCHRISTOFFELPATH);
 				//featureExtraction(windowSetDyD2, &Sw, testDate[iteration - WINDOWSIZE]);
@@ -768,25 +767,20 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 
 			//Update of inner map at each non fault (ALWAYS UPDATE MODE)
 			//!!! Have to add the case when a fault occured during the time window !!!
-			if(logSave[iteration][2] == 0 && code2 == 0)
+			if (logSave[iteration][2] == 0 && codeInner == 0)
 			{
 				for (int feat = 0; feat < OUTERFEATURENUMBER; feat++)
 				{
 					lastPoint[feat] = windowSetDyD2[0][feat];
 				}
-				//For now, the feature extraction is only done for one outer features
-				for (int p = 0; p < WINDOWSIZE; p++)
-				{
-					tempWindow[p] = windowSetDyD2[p][0];
-				}
-				featureExtractionScaled(tempWindow, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
+				featureExtractionScaled(windowSetDyD2, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
 				mapUpdate(Sw, &innerMapDyD2, testDate[iteration - WINDOWSIZE], AGELIMIT, AGEPENALTY, INNERDENSITYTHRESHOLD, SCORETHRESHOLD, INNERCHRISTOFFELPATH);
 
 			}
 
 
 			//Update of both maps from earlier normal data point
-			if (code2 == 2) //We update both map, as it means that code1 == 1 when the point arrived at the current iteration and raw map wasn't updated
+			if (codeInner == 2) //We update both map, as it means that codeOuter == 1 when the point arrived at the current iteration and raw map wasn't updated
 			{
 				//printMap(outerMap);
 				//printMap(innerMap);
@@ -795,26 +789,21 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 					lastPoint[feat] = windowSetDyD2[0][feat];
 					lastPointScaled[feat] = lastPoint[feat];
 				}
-				//For now, the feature extraction is only done for one outer features
-				for (int p = 0; p < WINDOWSIZE; p++)
-				{
-					tempWindow[p] = windowSetDyD2[p][0];
-				}
 				scale(lastPointScaled, outerMapDyD2.trainMinMax[0], outerMapDyD2.trainMinMax[1], OUTERFEATURENUMBER);
 				initSample(&Sp, OUTERFEATURENUMBER, testDate[iteration - WINDOWSIZE], lastPointScaled);
 				mapUpdate(Sp, &outerMapDyD2, testDate[iteration - WINDOWSIZE], AGELIMIT, AGEPENALTY, OUTERDENSITYTHRESHOLD, SCORETHRESHOLD, OUTERCHRISTOFFELPATH);
-				featureExtractionScaled(tempWindow, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
-				mapUpdate(Sw, &innerMapDyD2, testDate[iteration- WINDOWSIZE], AGELIMIT, AGEPENALTY, INNERDENSITYTHRESHOLD, SCORETHRESHOLD, INNERCHRISTOFFELPATH);
+				featureExtractionScaled(windowSetDyD2, &Sw, testDate[iteration - WINDOWSIZE], innerMapDyD2.trainMinMax);
+				mapUpdate(Sw, &innerMapDyD2, testDate[iteration - WINDOWSIZE], AGELIMIT, AGEPENALTY, INNERDENSITYTHRESHOLD, SCORETHRESHOLD, INNERCHRISTOFFELPATH);
 			}
 		}
 		
 
 
 		//Reset the aglorithm in case of anomaly
-		//if (resetDyD2Version0(&interrupt, &code1, &code2, code1Memory, code2Memory)) //Always reset
-		if (resetDyD2Version1(&interrupt, outerMapDyD2, lastPointScaled, &code1, &code2, code1Memory, code2Memory)) //Reset with outermap
-		//if (resetDyD2Version2(&interrupt, testLabelsDyD2[iteration][LABELROW], FAULTVALUE, &code1, &code2, code1Memory, code2Memory)) //Reset1 + Reset2
-		//if (resetDyD2Version3(&interrupt, outerMapDyD2, lastPoint, testLabelsDyD2[iteration][LABELROW], FAULTVALUE, &code1, &code2, code1Memory, code2Memory)) //Reset with labels
+		//if (resetDyD2Version0(&interrupt, &codeOuter, &codeInner, codeOuterMemory, codeInnerMemory)) //Always reset
+		if (resetDyD2Version1(&interrupt, outerMapDyD2, lastPointScaled, &codeOuter, &codeInner, codeOuterMemory, codeInnerMemory)) //Reset with outermap
+		//if (resetDyD2Version2(&interrupt, testLabelsDyD2[iteration][LABELROW], FAULTVALUE, &codeOuter, &codeInner, codeOuterMemory, codeInnerMemory)) //Reset1 + Reset2
+		//if (resetDyD2Version3(&interrupt, outerMapDyD2, lastPoint, testLabelsDyD2[iteration][LABELROW], FAULTVALUE, &codeOuter, &codeInner, codeOuterMemory, codeInnerMemory)) //Reset with labels
 		{
 			logSave[iteration][4] = 1;
 		}
@@ -823,8 +812,8 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[])
 		//Log file update
 		logSave[iteration][0] = iteration;
 		logSave[iteration][1] = testDate[iteration];
-		logSave[iteration][2] = code1;
-		logSave[iteration][3] = code2;
+		logSave[iteration][2] = codeOuter;
+		logSave[iteration][3] = codeInner;
 
 		/*
 		//Save map mid testing
@@ -935,6 +924,7 @@ void printResults(int results[4], float time[], char trainSet[], char testSet[],
 	float resultsPercent[4] = { 0,0,0,0 };
 	float sum = 0;
 	float meanTime = 0;
+	float totalTime = 0;
 
 
 	printf("\n\nTraining on train set: %s\n", trainSet);
@@ -944,11 +934,13 @@ void printResults(int results[4], float time[], char trainSet[], char testSet[],
 	printf("UCL size rupture: %f\n", UCLSIZERUPT);
 	printf("UCL size outer: %f\n", UCLSIZEOUTER);
 	printf("UCL size inner: %f\n", UCLSIZEINNER);
-	printf("feature number: %i\n", INNERFEATURENUMBER);
-	printf("age threshold raw uCl: %i\n", OUTERDENSITYTHRESHOLD);
-	printf("age threshold precise uCl: %i\n", INNERDENSITYTHRESHOLD);
-	printf("score threshold: %f\n", SCORETHRESHOLD);
-	printf("age penalty: %f\n", AGEPENALTY);
+	printf("Outer feature number: %i\n", OUTERFEATURENUMBER);
+	printf("Inner feature number: %i\n", INNERFEATURENUMBER);
+	//printf("age threshold raw uCl: %i\n", OUTERDENSITYTHRESHOLD);
+	//printf("age threshold precise uCl: %i\n", INNERDENSITYTHRESHOLD);
+	//printf("score threshold: %f\n", SCORETHRESHOLD);
+	printf("Ageing threshold: %f\n", AGELIMIT);
+	printf("Ageing penalty: %f\n", AGEPENALTY);
 	printf("\nResults are (TP / FP / FN / TN): %i / %i / %i / %i\n", results[0], results[1], results[2], results[3]);
 	sum = results[0] + results[1] + results[2] + results[3];
 	resultsPercent[0] = (results[0] / sum) * 100.0;
@@ -962,9 +954,11 @@ void printResults(int results[4], float time[], char trainSet[], char testSet[],
 		for (int i = 0; i < testIter; i++)
 		{
 			meanTime += time[i];
+			totalTime += time[i];
 		}
 		meanTime = meanTime / testIter;
-		printf("\nMean time: %f\n", meanTime);
+		printf("\nMean time (s): %f\n", meanTime);
+		printf("Total time (s): %f\n\n", totalTime);
 	}
 	
 	

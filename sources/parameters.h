@@ -23,7 +23,7 @@ It is here that you can input your own data set to set DyD2
 
 #define OUTERDENSITYTHRESHOLD 2 //Min number of sample before outerUcluster being replaced
 #define INNERDENSITYTHRESHOLD 2 //Min number of sample before innerUcluster being replaced
-#define AGELIMIT 10000 //Time before ageing begin (be carefull, as the time is taken into consideration, not the index position)
+#define AGELIMIT 10000.0 //Time before ageing begin (be carefull, as the time is taken into consideration, not the index position)
 #define AGEPENALTY 0.975 //Penalty given to an old uCluster. It is computed as <density = AGEPENALTY * oldDensity>. Must be float
 
 
