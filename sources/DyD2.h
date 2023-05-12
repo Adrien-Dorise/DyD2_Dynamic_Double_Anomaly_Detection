@@ -315,7 +315,7 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[]);
 void confusionMatrix(int results[4], float logData[][LOGROWDYD2], float testLabels[][LABELNUMBERDYD2], int trueLabelRow, int faultValue, int size, bool doAnomalyRemoval);
 
 /*
-* confusionMatrix
+* printResults
 * Print the confusion matrix in the terminal
 *
 * Input:
