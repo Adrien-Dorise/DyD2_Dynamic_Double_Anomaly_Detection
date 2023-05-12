@@ -48,9 +48,9 @@ struct sample Sp, Sw;
 
 /*
 * training 
-* Performs the offline training part of DyD². The outer and inner maps are created in the process.
+* Performs the offline training part of DyDÂ². The outer and inner maps are created in the process.
 * This allow for a mapping of the training set using as less ressources as possible
-* As a one-class classification method, DyD² only needs normal observations for this phase. Thus, the nominal behaviour oof the system is learned from historical normal data streams.
+* As a one-class classification method, DyDÂ² only needs normal observations for this phase. Thus, the nominal behaviour oof the system is learned from historical normal data streams.
 * Observations are taking out a sliding window and transformed into the feature space (now only statistical calculations are done) that are then stored in a sample.
 * After that, for each new sample, we see if a uCluster is reachable in the detection maps.
 * If it is, then we update the closest uCluster.
@@ -58,8 +58,8 @@ struct sample Sp, Sw;
 * Input:
 *	trainingSet: type = float[INDEX][FEATURES], 2D array containing the training set. The feature space size must be specified
 *	trainingSize: type = int, size of the trainingSet	
-*	outerMap: type = pointer to map, outer map of DyD² to initialised
-*	innerMap: type = pointer to map, inner map of DyD² to initialised
+*	outerMap: type = pointer to map, outer map of DyDÂ² to initialised
+*	innerMap: type = pointer to map, inner map of DyDÂ² to initialised
 * Output: None
 */
 void training(float trainingSet[][OUTERFEATURENUMBER], int trainingSize, struct map* outerMap, struct map* innerMap);
@@ -69,8 +69,8 @@ void training(float trainingSet[][OUTERFEATURENUMBER], int trainingSize, struct 
 * Saves the outer and inner maps in a txt file.
 * By doing so, it is possible to visualise the maps or load them for future use.
 * Input:
-*	outerMap: type = pointer to map, outer map of DyD² to initialised
-*	innerMap: type = pointer to map, inner map of DyD² to initialised
+*	outerMap: type = pointer to map, outer map of DyDÂ² to initialised
+*	innerMap: type = pointer to map, inner map of DyDÂ² to initialised
 *	savePath: type = string, path to the folder where the maps will be saved
 * Output: None
 */
@@ -78,13 +78,13 @@ void saveMaps(struct map outerMap, struct map innerMap, char savePath[]);
 
 /*
 * dataAcquisition
-* Acquires the next observation to be processed by DyD².
+* Acquires the next observation to be processed by DyDÂ².
 * This function may be modified depending on your experiment.
 * In this version, this function perform offline, and read the next value current value of a data set.
 * Input:
 *	iteration: type = int, index of the observation to be extracted
 *	data: type = float[INDEX][OUTERFEATURE+1], 2D array containing the data set to be extracted. We put OuterFeature+1 to take the time column in consideration
-*	dataSave: type = float[INDEX][OUTERFEATURE*2], 2D array used to create the logs after a DyD² run. We put OuterFeature*2 because we put scaled values as well
+*	dataSave: type = float[INDEX][OUTERFEATURE*2], 2D array used to create the logs after a DyDÂ² run. We put OuterFeature*2 because we put scaled values as well
 *	lastPoint: type = float[OUTERFEATURE], vector used to store the monitored observation.
 * Output: None
 */
@@ -94,7 +94,7 @@ void dataAcquisition(int iteration, float data[][OUTERFEATURENUMBER + 1], float 
 * changePointDetection
 * Performs the change point detection part of the algorithm.
 * A change point is defined as a "transition between different states in the process that generates the time series data"
-* In DyD², the focus is on detecting anomalies represented by change point. Hence, a this funtions is used to quickly exlude non-anomalous observations.
+* In DyDÂ², the focus is on detecting anomalies represented by change point. Hence, a this funtions is used to quickly exlude non-anomalous observations.
 * Change point deteciton is performed using a single uCluster called rupture uCluster and a sample point. 
 * A change point is detected when the rupture uCluster is not reachable by the current sample point. 
 * In that case, the rupture uCluster is destroyed and created using the next normal sample point.
@@ -109,7 +109,7 @@ bool changePointDetection(struct sample Sp, struct uCluster* uClRupt);
 /*
 * anomalyDetection
 * Performs the map detection part of the algorithm. 
-* DyD² includes two detection phases in order to distinguish critical from non-critical anomalies.
+* DyDÂ² includes two detection phases in order to distinguish critical from non-critical anomalies.
 * For the first phase, point sample and outer map are used, while window sample and inner map are used.
 * Anomaly detection is peformed by checking the reachability of the sample and the detection map.
 * Input:
@@ -150,7 +150,7 @@ void featureExtractionScaled(float window[], struct sample* Sw, float date, floa
 /*
 * mapUpdate
 * Performs the update of a single detection map.
-* It reflects the dynamic aspect of DyD², by integreting new knowledge about the normal behaviour of the system.
+* It reflects the dynamic aspect of DyDÂ², by integreting new knowledge about the normal behaviour of the system.
 * This phase is divide into to steps:
 * First, the center of mass of the reachable uCluster is updated
 * Then, all uCluster are updated using the mapUpdate() function
@@ -183,7 +183,7 @@ void mapUpdate(struct sample S, struct map* map, float date, float ageThreshold,
 * Input:
 *	postMapPath: type = string, path to the folder to save the post map files
 *	logFolderPath: type = string, path to the folder to save the log files
-*	faultIter: type = int, number of faults recorded during the detection phase of DyD²
+*	faultIter: type = int, number of faults recorded during the detection phase of DyDÂ²
 *	dataSave: type = float[INDEX][OUTERFEAT+1], observations of the whole detection phase
 *	dataSize: type = int, index size of the dataSave parameter
 *	logSave: type = float[INDEX][5], data used to create the log file
@@ -194,77 +194,77 @@ int resultSave(char postMapPath[], char logFolderPath[], int faultIter, float da
 
 /*
 * resetDyD2Version0
-* Reset strategy of DyD² when an anomaly is detected
+* Reset strategy of DyDÂ² when an anomaly is detected
 * In this version, the reset is systematically performed when an anomaly is detected.
-* It can be used to test the false positive performance of DyD² with a data set that contains no faulty observations
+* It can be used to test the false positive performance of DyDÂ² with a data set that contains no faulty observations
 * Input:
-*	interrupt: type = pointer to bool, parameter used to know if DyD² is in standby
+*	interrupt: type = pointer to bool, parameter used to know if DyDÂ² is in standby
 *	code1: type = pointer to int, detection state of outer features
 * 	code2: type = pointer to int, detection state of inner features
 *	code1Memory: type = array of int, detection state of previous outer features
 *	code2Memory: type = array of int, detection state of previous inner features
-* Output: Return True if DyD² has to be reset, false otherwise
+* Output: Return True if DyDÂ² has to be reset, false otherwise
 */
 bool resetDyD2Version0(bool* interrupt, int* code1, int* code2, int code1Memory[], int code2Memory[]);
 
 
 /*
 * resetDyD2Version1
-* Reset strategy of DyD² when an anomaly is detected
-* DyD² is reset when the next observation is reachable by the outer map
-* It is used to reset automatically DyD² with the next normal point.
+* Reset strategy of DyDÂ² when an anomaly is detected
+* DyDÂ² is reset when the next observation is reachable by the outer map
+* It is used to reset automatically DyDÂ² with the next normal point.
 * Input:
-*	interrupt: type = pointer to bool, parameter used to know if DyD² is in standby
-*	outerMap: type = map, initalised and trained outer map of DyD²
+*	interrupt: type = pointer to bool, parameter used to know if DyDÂ² is in standby
+*	outerMap: type = map, initalised and trained outer map of DyDÂ²
 *	lastPoint, type = array[OUTERFEATURE], most recent monitored observation.
 *	code1: type = pointer to int, detection state of outer features
 * 	code2: type = pointer to int, detection state of inner features
 *	code1Memory: type = array of int, detection state of previous outer features
 *	code2Memory: type = array of int, detection state of previous inner features
-* Output: Return True if DyD² has to be reset, false otherwise
+* Output: Return True if DyDÂ² has to be reset, false otherwise
 */
 bool resetDyD2Version1(bool* interrupt, struct map outerMap, float lastPoint[], int* code1, int* code2, int code1Memory[], int code2Memory[]);
 
 /*
 * resetDyD2Version2
-* Reset strategy of DyD² when an anomaly is detected
+* Reset strategy of DyDÂ² when an anomaly is detected
 * Combination of version 1 and 3
 * Input:
-*	interrupt: type = pointer to bool, parameter used to know if DyD² is in standby
+*	interrupt: type = pointer to bool, parameter used to know if DyDÂ² is in standby
 *	label: type = float, label of the last monitored observation
 *	faultValue: type = float, label used for the anomaly class
-*	outerMap: type = map, initalised and trained outer map of DyD²
+*	outerMap: type = map, initalised and trained outer map of DyDÂ²
 *	lastPoint, type = array[OUTERFEATURE], most recent monitored observation.
 *	code1: type = pointer to int, detection state of outer features
 * 	code2: type = pointer to int, detection state of inner features
 *	code1Memory: type = array of int, detection state of previous outer features
 *	code2Memory: type = array of int, detection state of previous inner features
-* Output: Return True if DyD² has to be reset, false otherwise
+* Output: Return True if DyDÂ² has to be reset, false otherwise
 */
 bool resetDyD2Version2(bool* interrupt, float label, float faultValue, int* code1, int* code2, int code1Memory[], int code2Memory[]);
 
 /*
 * resetDyD2Version3
-* Reset strategy of DyD² when an anomaly is detected
-* DyD² is reset based on the true label of the observation. It is reset when the observation is normal
+* Reset strategy of DyDÂ² when an anomaly is detected
+* DyDÂ² is reset based on the true label of the observation. It is reset when the observation is normal
 * It is the most accurate way ot reset, but the labels are needed to use it.
 * Input:
-*	interrupt: type = pointer to bool, parameter used to know if DyD² is in standby
+*	interrupt: type = pointer to bool, parameter used to know if DyDÂ² is in standby
 *	label: type = float, label of the last monitored observation
 *	faultValue: type = float, label used for the anomaly class
-*	outerMap: type = map, initalised and trained outer map of DyD²
+*	outerMap: type = map, initalised and trained outer map of DyDÂ²
 *	lastPoint, type = array[OUTERFEATURE], most recent monitored observation.
 *	code1: type = pointer to int, detection state of outer features
 * 	code2: type = pointer to int, detection state of inner features
 *	code1Memory: type = array of int, detection state of previous outer features
 *	code2Memory: type = array of int, detection state of previous inner features
-* Output: Return True if DyD² has to be reset, false otherwise
+* Output: Return True if DyDÂ² has to be reset, false otherwise
 */
 bool resetDyD2Version3(bool* interrupt, struct map outerMap, float lastPoint[], float label, float faultValue, int* code1, int* code2, int code1Memory[], int code2Memory[]);
 
 /*
 * offlinePhase
-* Perform the offline phase of DyD².
+* Perform the offline phase of DyDÂ².
 * The whole training set is read from a .txt file
 * The training is performed to create both outer and inner maps by using the training() function.
 * The maps are saved in a .txt file
@@ -278,7 +278,7 @@ void offlinePhase(char trainingPath[], char mapSavePath[]);
 
 /*
 * onlinePhase
-* Perform the online phase of DyD².
+* Perform the online phase of DyDÂ².
 * First the data are acquired from the input file
 * Second the change point detection is performed
 * Third the outer anomaly detection is performed
@@ -299,7 +299,7 @@ int onlinePhase(char testPath[], char postMapSavePath[], char logPath[]);
 
 /*
 * confusionMatrix
-* Perform the confusion matrix on a data set treated by DyD²
+* Perform the confusion matrix on a data set treated by DyDÂ²
 * The log data are compared to the real labels.
 *
 * Input:
@@ -329,12 +329,12 @@ void confusionMatrix(int results[4], float logData[][LOGROWDYD2], float testLabe
 void printResults(int results[4], float time[], char trainSet[], char testSet[], char labelSet[], int testIter);
 
 /*
-* confusionMatrix
-* Perform DyD² for a set of multiple train and test set
+* validation
+* Perform DyDÂ² for a set of multiple train and test set
 * For N train sets:
-*	DyD² is trained on N
+*	DyDÂ² is trained on N
 *	for M test sets:
-*		Perform the detection and confusion matrix using DyD² trained on N
+*		Perform the detection and confusion matrix using DyDÂ² trained on N
 * The results are saved
 * 
 * Input:
