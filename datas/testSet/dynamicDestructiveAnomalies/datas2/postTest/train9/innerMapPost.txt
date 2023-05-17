@@ -1,0 +1,113 @@
+[Global_parameters]
+Min_value: 0.503196
+Max_value: 73.958725
+
+[uCluster]
+uCluster_number: 0
+feature_number: 3
+data_number: 15176
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.896882,0.018708,0.011712
+score: 0.000000
+creation_date: 1
+last_update: 9938
+
+[uCluster]
+uCluster_number: 1
+feature_number: 3
+data_number: 10327
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.919962,0.079002,0.027328
+score: 0.000000
+creation_date: 1
+last_update: 9697
+
+[uCluster]
+uCluster_number: 2
+feature_number: 3
+data_number: 8707
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.947540,0.025872,0.014188
+score: 0.000000
+creation_date: 1
+last_update: 9934
+
+[uCluster]
+uCluster_number: 3
+feature_number: 3
+data_number: 2504
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.919590,0.139991,0.037855
+score: 0.000000
+creation_date: 1
+last_update: 7734
+
+[uCluster]
+uCluster_number: 4
+feature_number: 3
+data_number: 598
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.943132,0.212018,0.046605
+score: 0.000000
+creation_date: 1
+last_update: 7287
+
+[uCluster]
+uCluster_number: 5
+feature_number: 3
+data_number: 2874
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.949213,0.121228,0.034879
+score: 0.000000
+creation_date: 1
+last_update: 9694
+
+[uCluster]
+uCluster_number: 6
+feature_number: 3
+data_number: 6545
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.954212,0.071777,0.025822
+score: 0.000000
+creation_date: 1
+last_update: 9783
+
+[uCluster]
+uCluster_number: 7
+feature_number: 3
+data_number: 8327
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.933755,0.045826,0.019894
+score: 0.000000
+creation_date: 1
+last_update: 9928
+
+[uCluster]
+uCluster_number: 8
+feature_number: 3
+data_number: 1532
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.913265,0.020353,0.012393
+score: 0.000000
+creation_date: 3071
+last_update: 9909
+
+[uCluster]
+uCluster_number: 9
+feature_number: 3
+data_number: 2109
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.935775,0.010126,0.008303
+score: 0.000000
+creation_date: 3090
+last_update: 9979

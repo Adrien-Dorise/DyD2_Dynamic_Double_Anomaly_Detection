@@ -1,0 +1,113 @@
+[Global_parameters]
+Min_value: 0.580181
+Max_value: 73.682037
+
+[uCluster]
+uCluster_number: 0
+feature_number: 3
+data_number: 13844
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.901916,0.009097,0.007308
+score: 0.000000
+creation_date: 1
+last_update: 9979
+
+[uCluster]
+uCluster_number: 1
+feature_number: 3
+data_number: 12105
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.915897,0.063509,0.023303
+score: 0.000000
+creation_date: 1
+last_update: 9782
+
+[uCluster]
+uCluster_number: 2
+feature_number: 3
+data_number: 2510
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.919745,0.130764,0.035576
+score: 0.000000
+creation_date: 1
+last_update: 9694
+
+[uCluster]
+uCluster_number: 3
+feature_number: 3
+data_number: 1805
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 1.002835,0.056108,0.021628
+score: 0.000000
+creation_date: 6905
+last_update: 9979
+
+[uCluster]
+uCluster_number: 4
+feature_number: 3
+data_number: 1681
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.926352,0.011400,0.008321
+score: 0.000000
+creation_date: 3087
+last_update: 9970
+
+[uCluster]
+uCluster_number: 5
+feature_number: 3
+data_number: 7221
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.955689,0.076674,0.026051
+score: 0.000000
+creation_date: 1
+last_update: 9682
+
+[uCluster]
+uCluster_number: 6
+feature_number: 3
+data_number: 8641
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.941213,0.026838,0.013765
+score: 0.000000
+creation_date: 1
+last_update: 9934
+
+[uCluster]
+uCluster_number: 7
+feature_number: 3
+data_number: 1466
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.953172,0.153379,0.039030
+score: 0.000000
+creation_date: 1
+last_update: 9690
+
+[uCluster]
+uCluster_number: 8
+feature_number: 3
+data_number: 177
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.972668,0.294745,0.053380
+score: 0.000000
+creation_date: 1
+last_update: 7287
+
+[uCluster]
+uCluster_number: 9
+feature_number: 3
+data_number: 1743
+density: 999.999939
+size: 0.100000,0.100000,0.100000
+center: 0.925729,0.017954,0.010875
+score: 0.000000
+creation_date: 3073
+last_update: 9938

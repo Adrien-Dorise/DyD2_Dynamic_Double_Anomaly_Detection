@@ -30,7 +30,6 @@ It is here that you can input your own data set to set DyD2
 //UserParameters
 #define DOCROSSVALIDATION true //TRUE if you want to do multiple data sets at once
 #define WHICHDATASET 0 // 0 for experimental heavy ion data sets with destructive anomalies
-					   // TO COME:
 					   // 1 for simulated stationnary destructive anomalies
 					   // 2 for simulated stationnary non-destrucrive anomalies
 					   // 3 for simulated dynamic destructive anomalies

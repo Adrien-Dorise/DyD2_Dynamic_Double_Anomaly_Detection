@@ -1,0 +1,47 @@
+[Global_parameters]
+Min_value: 0.503196
+Max_value: 73.958725
+
+[uCluster]
+uCluster_number: 0
+feature_number: 3
+data_number: 5404
+density: 1574814.625000
+size: 0.150000,0.150000,0.150000
+center: 0.924121,0.016558,0.010858
+score: 0.000000
+creation_date: 1
+last_update: 9823
+
+[uCluster]
+uCluster_number: 1
+feature_number: 3
+data_number: 7297
+density: 1748740.625000
+size: 0.150000,0.150000,0.150000
+center: 0.945879,0.105980,0.032210
+score: 0.000000
+creation_date: 1
+last_update: 9980
+
+[uCluster]
+uCluster_number: 2
+feature_number: 3
+data_number: 7198
+density: 327999.968750
+size: 0.150000,0.150000,0.150000
+center: 0.928517,0.047985,0.020373
+score: 0.000000
+creation_date: 1
+last_update: 9847
+
+[uCluster]
+uCluster_number: 3
+feature_number: 3
+data_number: 5019
+density: 1041185.062500
+size: 0.150000,0.150000,0.150000
+center: 0.923122,0.028322,0.014967
+score: 0.000000
+creation_date: 1
+last_update: 9833

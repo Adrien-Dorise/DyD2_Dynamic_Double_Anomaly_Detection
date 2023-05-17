@@ -1,0 +1,28 @@
+//DyD2 parameters
+//for heavy-ion (WHICHDATASET = 0) 
+#define WINDOWSIZE 20 //Sliding time window legnth. Used to extract inner features from an obsevation
+#define UCLSIZERUPT 0.20 //Size of the rupture uCluster
+#define UCLSIZEOUTER 0.06 //Size of all uClusters in the outer map
+#define UCLSIZEINNER 0.03 //Size of all uClusters in the inner map
+#define OUTERFEATURENUMBER 1 //Number of outer features
+#define INNERFEATURENUMBER 4 //Number of inner features
+
+#define OUTERDENSITYTHRESHOLD 2 //Min number of sample before outerUcluster being replaced
+#define INNERDENSITYTHRESHOLD 2 //Min number of sample before innerUcluster being replaced
+#define AGELIMIT 500.0 //Time before ageing begin (be carefull, as the time is taken into consideration, not the index position)
+#define AGEPENALTY 0.975 //Penalty given to an old uCluster. It is computed as <density = AGEPENALTY * oldDensity>. Must be float
+
+
+//DyD2 parameters
+//for simulated dataset (when WHICHDATASET = 1 or 2 or 3 or 4)
+#define WINDOWSIZE 20 //Sliding time window legnth. Used to extract inner features from an obsevation
+#define UCLSIZERUPT 0.20 //Size of the rupture uCluster
+#define UCLSIZEOUTER 0.01 //Size of all uClusters in the outer map
+#define UCLSIZEINNER 0.05 //Size of all uClusters in the inner map
+#define OUTERFEATURENUMBER 1 //Number of outer features
+#define INNERFEATURENUMBER 4 //Number of inner features
+
+#define OUTERDENSITYTHRESHOLD 2 //Min number of sample before outerUcluster being replaced
+#define INNERDENSITYTHRESHOLD 2 //Min number of sample before innerUcluster being replaced
+#define AGELIMIT 10000.0 //Time before ageing begin (be carefull, as the time is taken into consideration, not the index position)
+#define AGEPENALTY 0.975 //Penalty given to an old uCluster. It is computed as <density = AGEPENALTY * oldDensity>. Must be float

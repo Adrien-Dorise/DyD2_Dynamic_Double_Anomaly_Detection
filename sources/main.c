@@ -58,7 +58,7 @@ void main()
 				break;
 		
 			case 2:
-				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/smallAnomalies/datas", 4, false);
+				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/smallAnomalies/datas", 4, true);
 				break;
 		
 			case 3:
@@ -66,7 +66,7 @@ void main()
 				break;
 		
 			case 4:
-				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/dynamicSmallAnomalies/datas", 2, false);
+				validation("datas/trainSet/simulation/datas", 2, "datas/testSet/dynamicSmallAnomalies/datas", 2, true);
 				break;
 
 			default:
