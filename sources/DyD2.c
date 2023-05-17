@@ -969,6 +969,7 @@ void printResults(int results[4], float time[], char trainSet[], char testSet[],
 void validation(char trainFolder[], int trainIteration, char testFolder[], int testIteration, bool doAnomalyRemoval)
 {
 	//File parameters
+	
 	char trainFileName[] = "/normalCurrent.txt";
 	char testNormalFileName[] = "/normalCurrent.txt";
 	char testFileName[] = "/dataSet.txt";
@@ -980,11 +981,19 @@ void validation(char trainFolder[], int trainIteration, char testFolder[], int t
 	char labelFile[500];
 	char trainNumber[10];
 	char testNumber[10];
+	char outerPath[500] = "";
+	char innerPath[500] = "";
 
 	//Results parameters
 	int confMatrix[4] = { 0,0,0,0 };
 	int testSize = 0;
 	float execTime[100] = { -1 };
+
+	//Map path initisalisation
+	strcat(outerPath, MAPPATH);
+	strcat(outerPath, "outerMap.txt");
+	strcat(innerPath, MAPPATH);
+	strcat(innerPath, "innerMap.txt");
 
 
 	for (int trainingIt = 1; trainingIt <= trainIteration; trainingIt++)
@@ -1002,6 +1011,10 @@ void validation(char trainFolder[], int trainIteration, char testFolder[], int t
 		
 		for (int testIt = 1; testIt <= testIteration; testIt++)
 		{
+			//Loading trained map
+			loadMap(&outerMapDyD2, outerPath, outerMapDyD2.trainMinMax);
+			loadMap(&innerMapDyD2, innerPath, innerMapDyD2.trainMinMax);
+
 			//Testing folder name initialisation
 			strcpy(testFile, testFolder); //C:test/datas
 			sprintf(testNumber, "%i", testIt);
@@ -1013,6 +1026,7 @@ void validation(char trainFolder[], int trainIteration, char testFolder[], int t
 			strcat(normalTestFileDyD2, testNormalFileName);  //C:test/datas5/normalCurrent.txt
 
 			printf("Testing %i/%i on file %s\n", testIt, testIteration, testFile);
+
 
 			//Testing
 			getLabels(labelFile, testLabelsDyD2, LABELNUMBERDYD2, LABELSKIPPINGLINE);
